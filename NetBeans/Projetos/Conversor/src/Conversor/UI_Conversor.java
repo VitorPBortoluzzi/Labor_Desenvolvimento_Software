@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Calculadora;
+package Conversor;
 
 import javax.swing.JOptionPane;
 
@@ -10,14 +10,14 @@ import javax.swing.JOptionPane;
  *
  * @author laboratorio
  */
-public class UI_Calculadora extends javax.swing.JFrame {
+public class UI_Conversor extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UI_Calculadora.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UI_Conversor.class.getName());
 
     /**
      * Creates new form UI_Calculadora
      */
-    public UI_Calculadora() {
+    public UI_Conversor() {
         initComponents();
     }
 
@@ -37,7 +37,6 @@ public class UI_Calculadora extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(360, 420));
 
         jBtn_calcular.setText("Calcular");
         jBtn_calcular.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -93,9 +92,11 @@ public class UI_Calculadora extends javax.swing.JFrame {
     private void jBtn_calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_calcularActionPerformed
         // TODO add your handling code here:
         //System.out.println("Oi mundo");
+        //double temperatura_c = ((Double.parseDouble(jTxtF_faren.getText()) - 32 ) * 5/9);
         double temperatura_c = ((Double.parseDouble(jTxtF_faren.getText()) - 32 ) / 1.8);
         String result = String.format("%.2f",temperatura_c);
         jTxtPane_visorResultado.setText("Temperatura convertida: " + result + " cº");
+        //jTxtPane_visorResultado.setText(String.valueOf(temperatura_c));
         
     }//GEN-LAST:event_jBtn_calcularActionPerformed
 
@@ -121,7 +122,7 @@ public class UI_Calculadora extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UI_Calculadora().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new UI_Conversor().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
