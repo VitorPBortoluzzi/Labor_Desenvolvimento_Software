@@ -13,4 +13,4 @@ Adicionar Lista para armazenar valores e operações
 
 TODO: 
     * Calculadora -> Finalizar e Comparar com Professor
-    * Sistema de Agenda??? "why not?"
+    * Sistema de Agenda??? "because? why not?"
