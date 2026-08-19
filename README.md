@@ -9,3 +9,8 @@ Calculadora TODO:
 https://www.devmedia.com.br/calculadora-java-criacao-de-aplicacoes-em-java-utilizando-swing/26007
 
 Adicionar Lista para armazenar valores e operações
+
+
+TODO: 
+    * Calculadora -> Finalizar e Comparar com Professor
+    * Sistema de Agenda??? "why not?"
