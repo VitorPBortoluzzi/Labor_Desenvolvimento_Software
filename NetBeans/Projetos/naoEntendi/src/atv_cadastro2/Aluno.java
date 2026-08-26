@@ -1,0 +1,54 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package atv_cadastro2;
+
+import atv_cadastro.*;
+
+/**
+ *
+ * @author laboratorio
+ */
+public class Aluno {
+    
+    public String nomeCompleto;
+    public String dataNascimento;
+    public char sexo;
+    public int matricula;
+    public String curso;
+    public String cpf;
+    public Endereco endereco;
+    public String estadoCivil;
+    public String telefone;
+
+    public Aluno(String nomeCompleto, String dataNascimento, char sexo, int matricula, String curso, String cpf, Endereco endereco, String estadoCivil, String telefone) {
+        this.nomeCompleto = nomeCompleto;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+        this.matricula = matricula;
+        this.curso = curso;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.estadoCivil = estadoCivil;
+        this.telefone = telefone;
+    }
+    
+    public Object[] obterDados(){
+        return new Object[]{nomeCompleto,dataNascimento,sexo,matricula,curso,cpf,endereco,estadoCivil,telefone};
+    }
+
+    @Override
+    public String toString() {
+        return nomeCompleto + ";" + 
+               dataNascimento + ";" + 
+               (sexo == 'M' ? "Masculino" : "Feminino") + ";" + 
+               matricula + ";" + 
+               curso + ";" + 
+               cpf + ";" + 
+               endereco.toString() + ";" + 
+               estadoCivil + ";" + 
+               telefone;
+    }
+    
+}

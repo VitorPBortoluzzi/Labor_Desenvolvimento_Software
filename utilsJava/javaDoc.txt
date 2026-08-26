@@ -1,0 +1,50 @@
+================================================================================
+                      GUIA COMPACTO DE JAVADOC
+================================================================================
+
+--- CONCEITO & SINTAXE ---
+Javadoc é o gerador de documentação oficial do Java. Lê comentários especiais e
+gera páginas HTML.
+
+Sintaxe básica (deve iniciar com /** e ficar ANTES do elemento):
+
+/**
+ * Descrição curta do que a classe ou método faz.
+ *
+ * @tag Descrição do parâmetro, retorno ou exceção.
+ */
+
+--------------------------------------------------------------------------------
+
+--- TAGS / PALAVRAS RESERVADAS DA DOCUMENTAÇÃO ---
+
+Tags de Bloco (ficam no final do comentário, uma por linha):
+--------------------------------------------------------------------------------
+@param <nome>      Documenta um parâmetro de método ou construtor.
+@return            Descreve o valor retornado pelo método (ignorar se void).
+@throws <classe>   Documenta exceções lançadas (alternativa: @exception).
+@author <nome>     Indica o autor da classe ou interface.
+@version <texto>   Informa a versão atual do código.
+@see <referência>  Cria link de referência ("Veja também") para outro método/classe.
+@since <versão>    Indica a partir de qual versão do projeto este item existe.
+@deprecated        Marca código obsoleto e desencoraja o uso.
+
+Tags Inline (usadas dentro do texto descritivo, entre chaves):
+--------------------------------------------------------------------------------
+{@code <código>}   Formata texto como código inline (ex: {@code true}).
+{@link <ref>}      Insere um link direto para outro membro do código no texto.
+{@value <campo>}   Exibe o valor constante de um campo estático.
+
+--------------------------------------------------------------------------------
+
+--- ONDE USAR ---
+1. Classes e Interfaces: Documentar responsabilidade geral, @author e @version.
+2. Métodos: Documentar o que faz, @param para entradas, @return para saídas e @throws.
+3. Atributos: Documentar a utilidade da variável.
+
+--------------------------------------------------------------------------------
+
+--- COMO GERAR O HTML ---
+- NetBeans: Clique com o botão direito no projeto -> "Gerar Javadoc".
+- Terminal: javadoc -d doc/ *.java
+================================================================================

@@ -1,0 +1,5 @@
+teste;F;Chines;[Astronomia, Esportes, Astronomia, Esportes, Tecnologia, Tecnologia]
+teste;F;Espanhol;[Astronomia, Esportes, Astronomia, Esportes, Tecnologia, Tecnologia]
+123;M;Japonês;[Astronomia, Esportes, Astronomia, Esportes, Tecnologia, Tecnologia]
+clara;F;Português;[Astronomia, Esportes, Astronomia, Esportes, Tecnologia, Tecnologia]
+asdd;F;Português;[Astronomia]
