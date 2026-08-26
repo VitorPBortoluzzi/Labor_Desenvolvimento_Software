@@ -17,10 +17,10 @@ public class Aluno {
     public String curso;
     public String cpf;
     public Endereco endereco;
-    public String estado;
+    public String estadoCivil;
     public String telefone;
 
-    public Aluno(String nomeCompleto, String dataNascimento, char sexo, int matricula, String curso, String cpf, Endereco endereco, String estado, String telefone) {
+    public Aluno(String nomeCompleto, String dataNascimento, char sexo, int matricula, String curso, String cpf, Endereco endereco, String estadoCivil, String telefone) {
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;
         this.sexo = sexo;
@@ -28,13 +28,21 @@ public class Aluno {
         this.curso = curso;
         this.cpf = cpf;
         this.endereco = endereco;
-        this.estado = estado;
+        this.estadoCivil = estadoCivil;
         this.telefone = telefone;
     }
 
     @Override
     public String toString() {
-        return "Aluno{" + nomeCompleto + ";" + dataNascimento + ";" + sexo + ";" + matricula + ";" + curso + ";" + cpf + ";" + endereco + ";" + estado + ";" + telefone + ";";
+        return nomeCompleto + ";" + 
+               dataNascimento + ";" + 
+               (sexo == 'M' ? "Masculino" : "Feminino") + ";" + 
+               matricula + ";" + 
+               curso + ";" + 
+               cpf + ";" + 
+               endereco.toString() + ";" + 
+               estadoCivil + ";" + 
+               telefone;
     }
     
 }
