@@ -11,27 +11,26 @@ import java.util.List;
 
 public class Arquivo {
 
-    private FileWriter arqW;
-    private BufferedWriter escritor;
-
-    private FileReader arqR;
-    private BufferedReader leitor;
-
-    public List<Aluno> listaAlunos;
-    public String nomeArquivo;
+    private List<Aluno> listaAlunos;
+    private String nomeArquivo;
 
     public Arquivo(String nomeArquivo) {
         this.nomeArquivo = nomeArquivo;
         this.listaAlunos = new ArrayList<>();
     }
 
+    public List<Aluno> getListaAlunos() {
+        return listaAlunos;
+    }
+
+    public void setListaAlunos(List<Aluno> listaAlunos) {
+        this.listaAlunos = listaAlunos;
+    }
+
     public List<Aluno> leArquivo() {
         listaAlunos.clear();
 
-        try {
-            arqR = new FileReader(nomeArquivo + ".txt");
-            leitor = new BufferedReader(arqR);
-
+        try (BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo + ".txt"))) {
             String linha;
 
             while ((linha = leitor.readLine()) != null) {
@@ -47,15 +46,14 @@ public class Arquivo {
                     String curso = campos[4];
                     String cpf = campos[5];
                     
-                    // Instância do Endereço
-                    String rua = campos[6];
-                    String numero = campos[7];
-                    String bairro = campos[8];
-                    String cidade = campos[9];
-                    String estado = campos[10];
-                    String cep = campos[11];
-                    
-                    Endereco endereco = new Endereco(rua, numero, bairro, cidade, estado, cep);
+                    Endereco endereco = new Endereco(
+                        campos[6],  // rua
+                        campos[7],  // numero
+                        campos[8],  // bairro
+                        campos[9],  // cidade
+                        campos[10], // estado
+                        campos[11]  // cep
+                    );
 
                     String estadoCivil = campos[12];
                     String telefone = campos[13];
@@ -68,54 +66,45 @@ public class Arquivo {
                     listaAlunos.add(aluno);
                 }
             }
-
-            leitor.close();
-            arqR.close();
-
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo ainda não existe.");
+            System.out.println("Arquivo '" + nomeArquivo + ".txt' ainda não existe. Será criado ao salvar.");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
         } catch (NumberFormatException e) {
-            System.out.println("Erro ao converter matrícula: " + e.getMessage());
+            System.err.println("Erro de conversão ao ler arquivo: " + e.getMessage());
         }
 
-        return listaAlunos;
+        return this.listaAlunos;
     }
 
+    /**
+     * Grava a lista de alunos no arquivo TXT utilizando os Getters das classes Aluno e Endereco.
+     */
     public void gravaArquivo() {
-        try {
-            arqW = new FileWriter(nomeArquivo + ".txt");
-            escritor = new BufferedWriter(arqW);
-
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nomeArquivo + ".txt"))) {
             for (Aluno a : listaAlunos) {
-                // Acesso direto aos atributos públicos de Aluno e Endereco
-                escritor.write(
-                    a.nomeCompleto + ";" +
-                    a.dataNascimento + ";" +
-                    a.sexo + ";" +
-                    a.matricula + ";" +
-                    a.curso + ";" +
-                    a.cpf + ";" +
-                    a.endereco.rua + ";" +
-                    a.endereco.numero + ";" +
-                    a.endereco.bairro + ";" +
-                    a.endereco.cidade + ";" +
-                    a.endereco.estado + ";" +
-                    a.endereco.cep + ";" +
-                    a.estadoCivil + ";" +
-                    a.telefone
-                );
+                // Montagem da linha utilizando explicitamente os Getters do Aluno e do Endereco
+                String linha = a.getNomeCompleto() + ";" +
+                               a.getDataNascimento() + ";" +
+                               a.getSexo() + ";" +
+                               a.getMatricula() + ";" +
+                               a.getCurso() + ";" +
+                               a.getCpf() + ";" +
+                               a.getEndereco().getRua() + ";" +
+                               a.getEndereco().getNumero() + ";" +
+                               a.getEndereco().getBairro() + ";" +
+                               a.getEndereco().getCidade() + ";" +
+                               a.getEndereco().getEstado() + ";" +
+                               a.getEndereco().getCep() + ";" +
+                               a.getEstadoCivil() + ";" +
+                               a.getTelefone();
 
+                escritor.write(linha);
                 escritor.newLine();
             }
-
-            escritor.close();
-            arqW.close();
-
-            System.out.println("Lista Salva no Arquivo");
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Lista de alunos salva com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro ao gravar no arquivo: " + e.getMessage());
         }
     }
 }

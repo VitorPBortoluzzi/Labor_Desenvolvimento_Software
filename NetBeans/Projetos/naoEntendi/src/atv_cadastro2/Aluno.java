@@ -1,28 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package atv_cadastro2;
 
-import atv_cadastro.*;
-
-/**
- *
- * @author laboratorio
- */
 public class Aluno {
     
-    public String nomeCompleto;
-    public String dataNascimento;
-    public char sexo;
-    public int matricula;
-    public String curso;
-    public String cpf;
-    public Endereco endereco;
-    public String estadoCivil;
-    public String telefone;
+    private String nomeCompleto;
+    private String dataNascimento;
+    private char sexo; // 'M' ou 'F'
+    private int matricula;
+    private String curso;
+    private String cpf;
+    private Endereco endereco;
+    private String estadoCivil;
+    private String telefone;
 
-    public Aluno(String nomeCompleto, String dataNascimento, char sexo, int matricula, String curso, String cpf, Endereco endereco, String estadoCivil, String telefone) {
+    public Aluno(String nomeCompleto, String dataNascimento, char sexo, int matricula, 
+                 String curso, String cpf, Endereco endereco, String estadoCivil, String telefone) {
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;
         this.sexo = sexo;
@@ -33,16 +24,65 @@ public class Aluno {
         this.estadoCivil = estadoCivil;
         this.telefone = telefone;
     }
-    
-    public Object[] obterDados(){
-        return new Object[]{nomeCompleto,dataNascimento,sexo,matricula,curso,cpf,endereco,estadoCivil,telefone};
+
+    // Getters e Setters
+    public String getNomeCompleto() { return nomeCompleto; }
+    public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
+
+    public String getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(String dataNascimento) { this.dataNascimento = dataNascimento; }
+
+    public char getSexo() { return sexo; }
+    public void setSexo(char sexo) { this.sexo = sexo; }
+
+    public int getMatricula() { return matricula; }
+    public void setMatricula(int matricula) { this.matricula = matricula; }
+
+    public String getCurso() { return curso; }
+    public void setCurso(String curso) { this.curso = curso; }
+
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
+
+    public Endereco getEndereco() { return endereco; }
+    public void setEndereco(Endereco endereco) { this.endereco = endereco; }
+
+    public String getEstadoCivil() { return estadoCivil; }
+    public void setEstadoCivil(String estadoCivil) { this.estadoCivil = estadoCivil; }
+
+    public String getTelefone() { return telefone; }
+    public void setTelefone(String telefone) { this.telefone = telefone; }
+
+    /**
+     * Retorna os dados formatados para exibição na JTable.
+     */
+    public Object[] obterDados() {
+        return new Object[]{
+            nomeCompleto,
+            dataNascimento,
+            (sexo == 'M' ? "Masculino" : "Feminino"),
+            matricula,
+            curso,
+            cpf,
+            endereco.getRua(),
+            endereco.getNumero(),
+            endereco.getBairro(),
+            endereco.getCidade(),
+            endereco.getEstado(),
+            endereco.getCep(),
+            estadoCivil,
+            telefone
+        };
     }
 
+    /**
+     * Retorna a string serializada para gravação em arquivo TXT (separado por ;)
+     */
     @Override
     public String toString() {
         return nomeCompleto + ";" + 
                dataNascimento + ";" + 
-               (sexo == 'M' ? "Masculino" : "Feminino") + ";" + 
+               sexo + ";" + 
                matricula + ";" + 
                curso + ";" + 
                cpf + ";" + 
@@ -50,5 +90,4 @@ public class Aluno {
                estadoCivil + ";" + 
                telefone;
     }
-    
 }

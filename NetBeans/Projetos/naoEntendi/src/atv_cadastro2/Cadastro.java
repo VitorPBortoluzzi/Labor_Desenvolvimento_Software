@@ -21,19 +21,39 @@ public class Cadastro extends javax.swing.JFrame {
     /**
      * Creates new form Cadastro
      */
-
-    private List<Aluno> listaAlunos;
     private Arquivo arquivo;
+    private List<Aluno> listaAlunos;
+    
 
     private void carregarTabela() {
         DefaultTableModel tabela = (DefaultTableModel) jTable1.getModel();
+        
         tabela.setRowCount(0);
+        
         txtA_debug.setText(""); // Limpa o TextArea antes de recarregar
 
         for (Aluno a : listaAlunos) {
             txtA_debug.append(a.toString() + "\n");
             tabela.addRow(a.obterDados());
         }
+    }
+    
+    private void limparCampos() {
+        txtF_Nome.setText("");
+        txtF_dataNasc.setText("");
+        btnG_sexo.clearSelection();
+        txtF_matricula.setText("");
+        txtF_Curso.setText("");
+        txtF_cpf.setText("");
+        txtF_rua.setText("");
+        txtF_nRua.setText("");
+        txtF_Bairro.setText("");
+        txtF_cidade.setText("");
+        txtF_estado.setText("");
+        txtF_cep.setText("");
+        cmbBox_estadoCivil.setSelectedIndex(0);
+        txtF_telefone.setText("");
+        txtF_Nome.requestFocus();
     }
 
     public Cadastro() {
@@ -108,7 +128,54 @@ public class Cadastro extends javax.swing.JFrame {
                 } 
             }
         });
-
+        
+//        txtF_dataNasc.addKeyListener(new java.awt.event.KeyAdapter() {
+//            @Override
+//            public void keyTyped(java.awt.event.KeyEvent evt) {
+//                char c = evt.getKeyChar();
+//                String textoAtual = txtF_dataNasc.getText();
+//                if (!Character.isDigit(c) || textoAtual.length() >= 10) {
+//                    evt.consume();
+//                    return;
+//                }
+//                if (textoAtual.length() == 2 || textoAtual.length() == 5) {
+//                    txtF_dataNasc.setText(textoAtual + "/");
+//                }
+//            }
+//        });
+//
+//        txtF_cpf.addKeyListener(new java.awt.event.KeyAdapter() {
+//            @Override
+//            public void keyTyped(java.awt.event.KeyEvent evt) {
+//                char c = evt.getKeyChar();
+//                String textoAtual = txtF_cpf.getText();
+//                if (!Character.isDigit(c) || textoAtual.length() >= 14) {
+//                    evt.consume();
+//                    return;
+//                }
+//                if (textoAtual.length() == 3 || textoAtual.length() == 7) {
+//                    txtF_cpf.setText(textoAtual + ".");
+//                } else if (textoAtual.length() == 11) {
+//                    txtF_cpf.setText(textoAtual + "-");
+//                }
+//            }
+//        });
+//            
+//        txtF_cep.addKeyListener(new java.awt.event.KeyAdapter() {
+//                    @Override
+//                    public void keyTyped(java.awt.event.KeyEvent evt) {
+//                        char c = evt.getKeyChar();
+//                        String textoAtual = txtF_cep.getText();
+//                        if (!Character.isDigit(c) || textoAtual.length() >= 9) {
+//                            evt.consume();
+//                            return;
+//                        }
+//                        if (textoAtual.length() == 5) {
+//                            txtF_cep.setText(textoAtual + "-");
+//                        } 
+//                    }
+//                });
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -302,8 +369,8 @@ public class Cadastro extends javax.swing.JFrame {
                                 .addComponent(jRadioButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButton2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1025, Short.MAX_VALUE))
+                        .addGap(0, 731, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -413,18 +480,26 @@ public class Cadastro extends javax.swing.JFrame {
             return;
         }
         
-        boolean matriculaJaExiste = false;
+        // 3. Verificação de Duplicidade (usando getMatricula())
         for (Aluno a : listaAlunos) {
-            if (a.matricula == matricula) {
-                matriculaJaExiste = true;
-                break;
+            if (a.getMatricula() == matricula) {
+                JOptionPane.showMessageDialog(this, "A matrícula " + matricula + " já pertence a outro aluno cadastrado!", "Matrícula Duplicada", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
         
-        if (matriculaJaExiste) {
-            JOptionPane.showMessageDialog(this, "A matrícula " + matricula + " já pertence a outro aluno cadastrado!", "Matrícula Duplicada", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        boolean matriculaJaExiste = false;
+//        for (Aluno a : listaAlunos) {
+//            if (a.matricula == matricula) {
+//                matriculaJaExiste = true;
+//                break;
+//            }
+//        }
+//        
+//        if (matriculaJaExiste) {
+//            JOptionPane.showMessageDialog(this, "A matrícula " + matricula + " já pertence a outro aluno cadastrado!", "Matrícula Duplicada", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
         
         Endereco objEndereco = new Endereco(
             txtF_rua.getText(),
@@ -448,6 +523,10 @@ public class Cadastro extends javax.swing.JFrame {
         );
         
         listaAlunos.add(objAluno);
+        arquivo.setListaAlunos(listaAlunos);
+        arquivo.gravaArquivo();
+        
+        carregarTabela();
         
         txtA_debug.append(objAluno.toString() + "\n");
         
