@@ -1,1 +1,1 @@
-Teste1;20/02/2003;M;1;Teste;999.999.999-99;rua;9;bairro;cidade;estado;99999-999;Divorciado;00000000000
+vitor;11/11/1111;M;1;cc;000.000.000;rua;1;10;10;10;10000-000;Separado Júdicialmente;00000000000

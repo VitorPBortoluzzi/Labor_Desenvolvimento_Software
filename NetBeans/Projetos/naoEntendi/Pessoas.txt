@@ -1,0 +1,3 @@
+Vitor;F;Chines;[Tecnologia, Tecnologia, Esportes, Tecnologia]
+Ricardo;M;Português;[Tecnologia, Esportes]
+MArcos;M;Chines;[Tecnologia, Tecnologia, Esportes, Tecnologia]

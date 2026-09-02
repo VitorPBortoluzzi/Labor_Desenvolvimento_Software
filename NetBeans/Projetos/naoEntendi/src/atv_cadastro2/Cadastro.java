@@ -6,6 +6,7 @@ package atv_cadastro2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntBinaryOperator;
 import javax.swing.JOptionPane;
 
 import javax.swing.table.DefaultTableModel;
@@ -23,17 +24,30 @@ public class Cadastro extends javax.swing.JFrame {
      */
     private Arquivo arquivo;
     private List<Aluno> listaAlunos;
+    private int linhaEdicao = -1;
     
 
+    private void registrarLog(String acao, String detalhe) {
+        // Captura a hora atual no formato HH:mm:ss
+        String horaAtual = java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+        // Monta a linha de log ex: "[14:35:10] [AÇÃO: SALVO] João Silva"
+        String mensagemLog = String.format("[%s] [AÇÃO: %s] %s\n", horaAtual, acao.toUpperCase(), detalhe);
+
+        // Adiciona o texto na área de debug
+        txtA_debug.append(mensagemLog);
+
+        // Rola o scroll automaticamente para o final do texto
+        txtA_debug.setCaretPosition(txtA_debug.getDocument().getLength());
+    }
+    
     private void carregarTabela() {
-        DefaultTableModel tabela = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel tabela = (DefaultTableModel) tbl_alunos.getModel();
         
         tabela.setRowCount(0);
-        
-        txtA_debug.setText(""); // Limpa o TextArea antes de recarregar
 
         for (Aluno a : listaAlunos) {
-            txtA_debug.append(a.toString() + "\n");
+//            txtA_debug.append(a.toString() + "\n");
             tabela.addRow(a.obterDados());
         }
     }
@@ -129,53 +143,6 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         
-//        txtF_dataNasc.addKeyListener(new java.awt.event.KeyAdapter() {
-//            @Override
-//            public void keyTyped(java.awt.event.KeyEvent evt) {
-//                char c = evt.getKeyChar();
-//                String textoAtual = txtF_dataNasc.getText();
-//                if (!Character.isDigit(c) || textoAtual.length() >= 10) {
-//                    evt.consume();
-//                    return;
-//                }
-//                if (textoAtual.length() == 2 || textoAtual.length() == 5) {
-//                    txtF_dataNasc.setText(textoAtual + "/");
-//                }
-//            }
-//        });
-//
-//        txtF_cpf.addKeyListener(new java.awt.event.KeyAdapter() {
-//            @Override
-//            public void keyTyped(java.awt.event.KeyEvent evt) {
-//                char c = evt.getKeyChar();
-//                String textoAtual = txtF_cpf.getText();
-//                if (!Character.isDigit(c) || textoAtual.length() >= 14) {
-//                    evt.consume();
-//                    return;
-//                }
-//                if (textoAtual.length() == 3 || textoAtual.length() == 7) {
-//                    txtF_cpf.setText(textoAtual + ".");
-//                } else if (textoAtual.length() == 11) {
-//                    txtF_cpf.setText(textoAtual + "-");
-//                }
-//            }
-//        });
-//            
-//        txtF_cep.addKeyListener(new java.awt.event.KeyAdapter() {
-//                    @Override
-//                    public void keyTyped(java.awt.event.KeyEvent evt) {
-//                        char c = evt.getKeyChar();
-//                        String textoAtual = txtF_cep.getText();
-//                        if (!Character.isDigit(c) || textoAtual.length() >= 9) {
-//                            evt.consume();
-//                            return;
-//                        }
-//                        if (textoAtual.length() == 5) {
-//                            txtF_cep.setText(textoAtual + "-");
-//                        } 
-//                    }
-//                });
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -199,8 +166,8 @@ public class Cadastro extends javax.swing.JFrame {
         jLab_telefone = new javax.swing.JLabel();
         txtF_Nome = new javax.swing.JTextField();
         txtF_dataNasc = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rdoBtn_masc = new javax.swing.JRadioButton();
+        rdoBtn_fem = new javax.swing.JRadioButton();
         txtF_matricula = new javax.swing.JTextField();
         txtF_Curso = new javax.swing.JTextField();
         txtF_cpf = new javax.swing.JTextField();
@@ -216,7 +183,9 @@ public class Cadastro extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtA_debug = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_alunos = new javax.swing.JTable();
+        btn_excluir = new javax.swing.JButton();
+        btn_editar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,11 +223,11 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
 
-        btnG_sexo.add(jRadioButton1);
-        jRadioButton1.setText("Masculino");
+        btnG_sexo.add(rdoBtn_masc);
+        rdoBtn_masc.setText("Masculino");
 
-        btnG_sexo.add(jRadioButton2);
-        jRadioButton2.setText("Feminino");
+        btnG_sexo.add(rdoBtn_fem);
+        rdoBtn_fem.setText("Feminino");
 
         txtF_cpf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -279,7 +248,7 @@ public class Cadastro extends javax.swing.JFrame {
         txtA_debug.setRows(5);
         jScrollPane1.setViewportView(txtA_debug);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_alunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -295,16 +264,28 @@ public class Cadastro extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        tbl_alunos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tbl_alunos.setShowGrid(true);
+        jScrollPane2.setViewportView(tbl_alunos);
+
+        btn_excluir.setText("Excluir");
+        btn_excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_excluirActionPerformed(evt);
+            }
+        });
+
+        btn_editar.setText("Editar");
+        btn_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_Cadastrar)
-                .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,12 +347,20 @@ public class Cadastro extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLab_sexo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton1)
+                                .addComponent(rdoBtn_masc)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2)))
+                                .addComponent(rdoBtn_fem)))
                         .addGap(0, 731, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_excluir)
+                .addGap(18, 18, 18)
+                .addComponent(btn_editar)
+                .addGap(18, 18, 18)
+                .addComponent(btn_Cadastrar)
+                .addGap(108, 108, 108))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,8 +376,8 @@ public class Cadastro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLab_sexo)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rdoBtn_masc)
+                    .addComponent(rdoBtn_fem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLab_matricula)
@@ -434,7 +423,10 @@ public class Cadastro extends javax.swing.JFrame {
                     .addComponent(jLab_telefone)
                     .addComponent(txtF_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_Cadastrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Cadastrar)
+                    .addComponent(btn_excluir)
+                    .addComponent(btn_editar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -445,27 +437,16 @@ public class Cadastro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void salvarEmArquivo() {
-//        String conteudo = txtA_debug.getText();
-//
-//        // Evita salvar se o TextArea estiver completamente vazio
-//        if (conteudo.trim().isEmpty()) {
-//            return;
-//        }
-//
-//        // Utiliza BufferedWriter para gravar os dados de forma eficiente
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter("alunos_cadastrados.txt"))) {
-//            writer.write(conteudo);
-//            JOptionPane.showMessageDialog(this, "Dados salvos em 'alunos_cadastrados.txt' com sucesso!", "Arquivo Salvo", JOptionPane.INFORMATION_MESSAGE);
-//        } catch (IOException e) {
-//            JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
     private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarActionPerformed
+        if(linhaEdicao != -1){
+            Aluno aEditado = listaAlunos.get(linhaEdicao); 
+            
+        }
+        
         char sexo;
-        if(jRadioButton1.isSelected()){
+        if(rdoBtn_masc.isSelected()){
             sexo = 'M'; 
-        } else if (jRadioButton2.isSelected()){
+        } else if (rdoBtn_fem.isSelected()){
             sexo = 'F';
         } else {
             JOptionPane.showMessageDialog(this, "Selecione o sexo do aluno!", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -481,25 +462,22 @@ public class Cadastro extends javax.swing.JFrame {
         }
         
         // 3. Verificação de Duplicidade (usando getMatricula())
-        for (Aluno a : listaAlunos) {
-            if (a.getMatricula() == matricula) {
+        for (int i = 0; i < listaAlunos.size(); i++) {
+            // Se for edição, ignora a própria linha que está sendo editada
+            if (i == linhaEdicao) {
+                continue;
+            }
+            if (listaAlunos.get(i).getMatricula() == matricula) {
                 JOptionPane.showMessageDialog(this, "A matrícula " + matricula + " já pertence a outro aluno cadastrado!", "Matrícula Duplicada", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
         
-//        boolean matriculaJaExiste = false;
-//        for (Aluno a : listaAlunos) {
-//            if (a.matricula == matricula) {
-//                matriculaJaExiste = true;
-//                break;
-//            }
-//        }
-//        
-//        if (matriculaJaExiste) {
-//            JOptionPane.showMessageDialog(this, "A matrícula " + matricula + " já pertence a outro aluno cadastrado!", "Matrícula Duplicada", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
+        if (cmbBox_estadoCivil.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um Estado Civil válido!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String estadoCivil = String.valueOf(cmbBox_estadoCivil.getSelectedItem());
         
         Endereco objEndereco = new Endereco(
             txtF_rua.getText(),
@@ -510,30 +488,61 @@ public class Cadastro extends javax.swing.JFrame {
             txtF_cep.getText()
         );
         
-        Aluno objAluno = new Aluno(
-            txtF_Nome.getText(),
-            txtF_dataNasc.getText(),
-            sexo,
-            matricula,
-            txtF_Curso.getText(),
-            txtF_cpf.getText(),
-            objEndereco,
-            String.valueOf(cmbBox_estadoCivil.getSelectedItem()),
-            txtF_telefone.getText()
-        );
+//        Aluno objAluno = new Aluno(
+//            txtF_Nome.getText(),
+//            txtF_dataNasc.getText(),
+//            sexo,
+//            matricula,
+//            txtF_Curso.getText(),
+//            txtF_cpf.getText(),
+//            objEndereco,
+//            String.valueOf(cmbBox_estadoCivil.getSelectedItem()),
+//            txtF_telefone.getText()
+//        );
         
-        listaAlunos.add(objAluno);
+        if (linhaEdicao != -1) {
+            // --- ATUALIZA ALUNO EXISTENTE ---
+            Aluno aEditado = listaAlunos.get(linhaEdicao);
+
+            aEditado.setNomeCompleto(txtF_Nome.getText());
+            aEditado.setDataNascimento(txtF_dataNasc.getText());
+            aEditado.setSexo(sexo);
+            aEditado.setMatricula(matricula);
+            aEditado.setCurso(txtF_Curso.getText());
+            aEditado.setCpf(txtF_cpf.getText());
+            aEditado.setEndereco(objEndereco);
+            aEditado.setEstadoCivil(estadoCivil);
+            aEditado.setTelefone(txtF_telefone.getText());
+
+            JOptionPane.showMessageDialog(this, "Aluno atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            linhaEdicao = -1; // Reseta a variável de controle de edição
+            registrarLog("Editado", "Pessoa editada: " + aEditado);
+
+        } else {
+            // --- CRIA NOVO ALUNO ---
+            Aluno objAluno = new Aluno(
+                txtF_Nome.getText(),
+                txtF_dataNasc.getText(),
+                sexo,
+                matricula,
+                txtF_Curso.getText(),
+                txtF_cpf.getText(),
+                objEndereco,
+                estadoCivil,
+                txtF_telefone.getText()
+            );
+
+            listaAlunos.add(objAluno);
+            JOptionPane.showMessageDialog(this, "Aluno cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            registrarLog("SALVO", "Pessoa cadastrada: " + objAluno);
+        }
+
+        // 8. Gravação dos dados e atualização da interface
         arquivo.setListaAlunos(listaAlunos);
         arquivo.gravaArquivo();
-        
-        carregarTabela();
-        
-        //txtA_debug.append(objAluno.toString() + "\n");
-        
-        JOptionPane.showMessageDialog(this, "Aluno cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-        
-   
+        carregarTabela();
+        limparCampos(); // Lembre-se de implementar ou chamar o método que limpa os campos da tela
     }//GEN-LAST:event_btn_CadastrarActionPerformed
 
     private void txtF_dataNascKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtF_dataNascKeyTyped
@@ -543,6 +552,71 @@ public class Cadastro extends javax.swing.JFrame {
     private void txtF_cpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtF_cpfKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtF_cpfKeyTyped
+
+    private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
+        int linha = tbl_alunos.getSelectedRow();
+        if (linha == -1){
+            JOptionPane.showMessageDialog(null, "Selecione uma pessoa na Tabela.", "Atenção",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int resposta = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir este Aluno?","Confirmação",JOptionPane.YES_NO_OPTION);
+        
+        if (resposta == JOptionPane.YES_OPTION){
+            Aluno pRemovida = listaAlunos.get(linha);
+            listaAlunos.remove(linha);
+            
+            carregarTabela();
+            
+//            jTable_arquivotxt.remove(linha);
+            
+            System.out.println("Pessoas Excluídas!");;
+            
+            registrarLog("Excluida", "Pessoa Excluida: " + pRemovida);
+            
+            arquivo.gravaArquivo();
+        }
+    }//GEN-LAST:event_btn_excluirActionPerformed
+
+    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
+        int linha = tbl_alunos.getSelectedRow();
+        
+        if (linha == -1){
+            JOptionPane.showMessageDialog(null, "Selecione uma pessoa para editar");
+            return;
+        }
+        
+        linhaEdicao = linha;
+        Aluno a = listaAlunos.get(linha);
+        txtF_Nome.setText(a.getNomeCompleto());
+        
+        txtF_dataNasc.setText(a.getDataNascimento());
+        
+        if(a.getSexo() == 'M'){
+            rdoBtn_masc.setSelected(true);
+        } else {
+            rdoBtn_fem.setSelected(true);
+        }
+        
+        txtF_matricula.setText(a.getMatricula()+"");
+        txtF_Curso.setText(a.getCurso());
+        txtF_cpf.setText(a.getCpf());
+        
+        txtF_rua.setText(a.getEndereco().getRua());
+        txtF_nRua.setText(a.getEndereco().getNumero());
+        txtF_Bairro.setText(a.getEndereco().getBairro());
+        txtF_cidade.setText(a.getEndereco().getCidade());
+        txtF_estado.setText(a.getEndereco().getEstado());
+        txtF_cep.setText(a.getEndereco().getCep());
+        
+        if (a.getEstadoCivil() != null) {
+            cmbBox_estadoCivil.setSelectedItem(a.getEstadoCivil());
+        }
+        
+        txtF_telefone.setText(a.getTelefone());
+        
+        registrarLog("Editar:", "Pessoa: " + a);
+    }//GEN-LAST:event_btn_editarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -572,6 +646,8 @@ public class Cadastro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btnG_sexo;
     private javax.swing.JButton btn_Cadastrar;
+    private javax.swing.JButton btn_editar;
+    private javax.swing.JButton btn_excluir;
     private javax.swing.JComboBox<String> cmbBox_estadoCivil;
     private javax.swing.JLabel jLab_bairro;
     private javax.swing.JLabel jLab_cep;
@@ -587,11 +663,11 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLab_rua;
     private javax.swing.JLabel jLab_sexo;
     private javax.swing.JLabel jLab_telefone;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton rdoBtn_fem;
+    private javax.swing.JRadioButton rdoBtn_masc;
+    private javax.swing.JTable tbl_alunos;
     private javax.swing.JTextArea txtA_debug;
     private javax.swing.JTextField txtF_Bairro;
     private javax.swing.JTextField txtF_Curso;
