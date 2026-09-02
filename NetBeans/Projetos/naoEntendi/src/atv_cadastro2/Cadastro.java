@@ -528,7 +528,7 @@ public class Cadastro extends javax.swing.JFrame {
         
         carregarTabela();
         
-        txtA_debug.append(objAluno.toString() + "\n");
+        //txtA_debug.append(objAluno.toString() + "\n");
         
         JOptionPane.showMessageDialog(this, "Aluno cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
