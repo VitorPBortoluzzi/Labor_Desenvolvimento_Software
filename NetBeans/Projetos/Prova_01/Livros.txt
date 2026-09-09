@@ -1,0 +1,4 @@
+ teste; teste; 123;D;Ficção;Em Andamento
+A pedra;Rocha;10000A.C;D;História;Nao Iniciado
+ TesteFinal;Vitor P. Bort; 2003;F;História;Nao Iniciado
+ a; b; 2123;F;Romance;Concluido

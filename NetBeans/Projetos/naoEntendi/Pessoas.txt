@@ -1,3 +1,4 @@
-Vitor;F;Chines;[Tecnologia, Tecnologia, Esportes, Tecnologia]
-Ricardo;M;Português;[Tecnologia, Esportes]
-MArcos;M;Chines;[Tecnologia, Tecnologia, Esportes, Tecnologia]
+Vitor;M;Chines;[Tecnologia, Esportes, Astronomia]
+Teste;F;Espanhol;[Tecnologia, Astronomia]
+Teste 1;F;Inglês;[Esportes, Astronomia]
+Vitor;M;Português;[Esportes, Astronomia]

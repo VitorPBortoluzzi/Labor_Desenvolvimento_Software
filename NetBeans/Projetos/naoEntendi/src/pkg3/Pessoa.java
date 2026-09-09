@@ -1,6 +1,5 @@
 package pkg3;
 
-import pkg2_continuacao.*;
 import java.util.ArrayList;
 
 public class Pessoa {
