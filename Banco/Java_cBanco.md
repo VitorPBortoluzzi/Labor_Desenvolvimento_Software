@@ -9,7 +9,7 @@ show databases;
 use dbaula_01;
 
 CREATE TABLE pessoa(
-    id int auto_increment PRIMARY KEY
+    id int auto_increment PRIMARY KEY,
     nome varchar(50) NOT NULL,
     sexo varchar(1) NOT NULL,
     idioma varchar(10) NOT NULL
@@ -31,7 +31,7 @@ show databases;
 use escola;
 
 CREATE TABLE alunos(
-    id int auto_increment PRIMARY KEY
+    id int auto_increment PRIMARY KEY,
     nome varchar(50) NOT NULL,
     idade int NOT NULL,
     curso varchar(50) NOT NULL
