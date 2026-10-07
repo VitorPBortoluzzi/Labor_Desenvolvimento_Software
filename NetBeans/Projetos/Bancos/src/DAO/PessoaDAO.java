@@ -127,6 +127,40 @@ public class PessoaDAO {
      }
  }
  
+  public List<Pessoa> getPessoasNomeSexo(String nome, String sexo){
+     String sql = "SELECT * FROM pessoa WHERE nome LIKE ? AND sexo LIKE ?";
+     try{
+         PreparedStatement stmt = conn.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+         
+         stmt.setString(1,"%" + nome + "%");
+         stmt.setString(2, "%" + sexo + "%");
+         
+//        if (sexo == null || sexo.isEmpty()) {
+//            stmt.setString(2, "%");
+//        } else {
+//            stmt.setString(2, sexo);
+//        }
+         
+         
+         ResultSet rs = stmt.executeQuery();
+         List<Pessoa> listaPessoas = new ArrayList();
+         
+         while(rs.next()){
+             Pessoa p = new Pessoa();
+             p.setId(rs.getInt("id"));
+             p.setNome(rs.getString("nome"));
+             p.setSexo(rs.getString("sexo"));
+             p.setIdioma(rs.getString("idioma"));
+             listaPessoas.add(p);
+         }         
+         return listaPessoas;                  
+     } catch (SQLException ex){
+         System.out.println("Erro ao consultar todas as pessoas: "+ ex.getMessage());
+         return null;
+     }
+ }
+ 
+ 
 }
 
 
