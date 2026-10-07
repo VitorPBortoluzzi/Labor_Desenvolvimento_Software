@@ -13,16 +13,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author laboratorio
  */
-public class Arquivo extends javax.swing.JFrame {
+public class BuscarPessoa extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Arquivo.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarPessoa.class.getName());
 
     /**
      * Creates new form Arquivo
      */
-    public Arquivo() {
+    public BuscarPessoa() {
         initComponents();
-        carregarTabela();
     }
 
     /**
@@ -37,6 +36,8 @@ public class Arquivo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_pessoa = new javax.swing.JTable();
         btn_atualizar = new javax.swing.JButton();
+        Nome = new javax.swing.JLabel();
+        txtF_nome = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,12 +66,14 @@ public class Arquivo extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_pessoa);
 
-        btn_atualizar.setText("Atualizar");
+        btn_atualizar.setText("Buscar");
         btn_atualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_atualizarActionPerformed(evt);
             }
         });
+
+        Nome.setText("Nome:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,11 +81,17 @@ public class Arquivo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_atualizar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(Nome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtF_nome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_atualizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -91,7 +100,10 @@ public class Arquivo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_atualizar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_atualizar)
+                    .addComponent(Nome)
+                    .addComponent(txtF_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -107,7 +119,7 @@ public class Arquivo extends javax.swing.JFrame {
      */
     private void carregarTabela() {        
         PessoaDAO pDAO = new PessoaDAO();
-        List<Pessoa> listaPessoas = pDAO.getPessoas();
+        List<Pessoa> listaPessoas = pDAO.getPessoasNome(txtF_nome.getText());
         
         DefaultTableModel tabela = (DefaultTableModel) tbl_pessoa.getModel();
         
@@ -146,12 +158,14 @@ public class Arquivo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Arquivo().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new BuscarPessoa().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Nome;
     private javax.swing.JButton btn_atualizar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_pessoa;
+    private javax.swing.JTextField txtF_nome;
     // End of variables declaration//GEN-END:variables
 }

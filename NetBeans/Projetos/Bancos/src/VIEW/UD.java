@@ -67,12 +67,6 @@ public class UD extends javax.swing.JFrame {
 
         jLabel5.setText("ID p/Editar:");
 
-        txtF_idEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtF_idEditarActionPerformed(evt);
-            }
-        });
-
         btn_atualizar.setText("Atualizar");
         btn_atualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,10 +182,6 @@ public class UD extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btn_consultarActionPerformed
-
-    private void txtF_idEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_idEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtF_idEditarActionPerformed
 
     private void btn_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atualizarActionPerformed
         String sexo = null;

@@ -150,9 +150,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtF_idEditar">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtF_idEditarActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_atualizar">
       <Properties>
