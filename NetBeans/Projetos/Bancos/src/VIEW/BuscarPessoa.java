@@ -35,7 +35,6 @@ public class BuscarPessoa extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_pessoa = new javax.swing.JTable();
-        btn_atualizar = new javax.swing.JButton();
         Nome = new javax.swing.JLabel();
         txtF_nome = new javax.swing.JTextField();
 
@@ -66,14 +65,13 @@ public class BuscarPessoa extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_pessoa);
 
-        btn_atualizar.setText("Buscar");
-        btn_atualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_atualizarActionPerformed(evt);
+        Nome.setText("Nome:");
+
+        txtF_nome.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtF_nomeCaretUpdate(evt);
             }
         });
-
-        Nome.setText("Nome:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,13 +84,9 @@ public class BuscarPessoa extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(Nome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtF_nome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_atualizar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(txtF_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,18 +95,17 @@ public class BuscarPessoa extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_atualizar)
                     .addComponent(Nome)
                     .addComponent(txtF_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atualizarActionPerformed
+    private void txtF_nomeCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtF_nomeCaretUpdate
         carregarTabela();
-    }//GEN-LAST:event_btn_atualizarActionPerformed
+    }//GEN-LAST:event_txtF_nomeCaretUpdate
 
     /**
      * @param args the command line arguments
@@ -127,16 +120,16 @@ public class BuscarPessoa extends javax.swing.JFrame {
 
         if (listaPessoas != null) {
             for (Pessoa p : listaPessoas) {
-                // Adiciona uma nova linha com os dados da pessoa
-                tabela.addRow(new Object[]{
+                Object[] obj = new Object[]{
                     p.getId(),
                     p.getNome(),
                     p.getSexo(),
-                    p.getIdioma()
-                });
+                    p.getIdioma()};
+                tabela.addRow(obj);
+                }
             }
         }
-    }
+ 
     
     
     public static void main(String args[]) {
@@ -163,7 +156,6 @@ public class BuscarPessoa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Nome;
-    private javax.swing.JButton btn_atualizar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_pessoa;
     private javax.swing.JTextField txtF_nome;
