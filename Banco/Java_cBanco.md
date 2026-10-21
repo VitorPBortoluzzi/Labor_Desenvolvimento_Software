@@ -6,7 +6,7 @@ create database DBaula01;
 
 show databases;
 
-use dbaula_01;
+use dbaula01;
 
 CREATE TABLE pessoa(
     id int auto_increment PRIMARY KEY,
@@ -16,7 +16,7 @@ CREATE TABLE pessoa(
 );
 
 show tables;
-desc pressoa;
+desc pessoa;
 
 INSERT INTO pessoa(nome,sexo,idioma) VALUES ("Ricardo","M","Portugês"),("Vitor","M","Português"),("Mary","F","Inglês");
 

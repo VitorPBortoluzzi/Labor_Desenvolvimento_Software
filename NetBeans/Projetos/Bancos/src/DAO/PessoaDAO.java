@@ -19,14 +19,19 @@ public class PessoaDAO {
     }
     
  public void inserir (Pessoa pessoa){
-     try {
-         String sql = "INSERT INTO pessoa(nome,sexo,idioma) values (?,?,?);";
-         PreparedStatement stmt = this.conn.prepareStatement(sql);
+     String sql = "INSERT INTO pessoa(nome,sexo,idioma) values (?,?,?);";
+     try (PreparedStatement stmt = this.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
          stmt.setString(1, pessoa.getNome());
          stmt.setString(2, pessoa.getSexo());
          stmt.setString(3, pessoa.getIdioma());
          
          stmt.execute();
+         
+         try (ResultSet rs = stmt.getGeneratedKeys()) {
+            if (rs.next()) {
+                pessoa.setId(rs.getInt(1));
+            }
+        }
      } catch (SQLException e) {
          System.out.println("Erro ao inserir pessoa:"+e.getMessage());
      }
