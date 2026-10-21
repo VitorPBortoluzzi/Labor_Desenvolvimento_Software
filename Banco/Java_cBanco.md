@@ -21,6 +21,17 @@ desc pessoa;
 INSERT INTO pessoa(nome,sexo,idioma) VALUES ("Ricardo","M","Portugês"),("Vitor","M","Português"),("Mary","F","Inglês");
 
 select * from pessoa;
+
+CREATE TABLE veiculo(id int AUTO_INCREMENT PRIMARY KEY,
+    modelo varchar(30) not null,
+    placa varchar(7) not null,
+    id_pessoa int NOT NULL,
+    foreign key(id_pessoa) references pessoa(id)
+    );
+
+
+
+
 ```
 
 ```SQL
@@ -66,3 +77,10 @@ Beans:
 
 DAO:
     CRUD do SQL
+
+
+
+Ordem de inserção de uma tabela do banco no código:
+
+beans -> Atributos
+DAo -> acesso a tabela

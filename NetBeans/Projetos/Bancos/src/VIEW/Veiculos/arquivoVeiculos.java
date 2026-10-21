@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package VIEW;
+package VIEW.Veiculos;
 
-import DAO.PessoaDAO;
+
+import DAO.VeiculosDAO;
 import beans.Pessoa;
+import beans.Veiculos;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,14 +15,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author laboratorio
  */
-public class Arquivo extends javax.swing.JFrame {
+public class arquivoVeiculos extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Arquivo.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(arquivoVeiculos.class.getName());
 
     /**
      * Creates new form Arquivo
      */
-    public Arquivo() {
+    public arquivoVeiculos() {
         initComponents();
         carregarTabela();
     }
@@ -45,7 +47,7 @@ public class Arquivo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nome", "Sexo", "Idioma"
+                "ID", "Modelo", "Placa", "Pessoa"
             }
         ) {
             Class[] types = new Class [] {
@@ -106,21 +108,18 @@ public class Arquivo extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     private void carregarTabela() {        
-        PessoaDAO pDAO = new PessoaDAO();
-        List<Pessoa> listaPessoas = pDAO.getPessoas();
+        VeiculosDAO vdao = new VeiculosDAO();
+        List<Veiculos> listaVeiculos = vdao.getVeiculos();
         
         DefaultTableModel tabela = (DefaultTableModel) tbl_pessoa.getModel();
         
         tabela.setRowCount(0);
 
-        if (listaPessoas != null) {
-            for (Pessoa p : listaPessoas) {
+        if (listaVeiculos != null) {
+            for (Veiculos v : listaVeiculos) {
                 // Adiciona uma nova linha com os dados da pessoa
                 tabela.addRow(new Object[]{
-                    p.getId(),
-                    p.getNome(),
-                    p.getSexo(),
-                    p.getIdioma()
+                   v.getId(),v.getModelo(),v.getPlaca(),v.getPessoaid()
                 });
             }
         }
@@ -146,7 +145,7 @@ public class Arquivo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Arquivo().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new arquivoVeiculos().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

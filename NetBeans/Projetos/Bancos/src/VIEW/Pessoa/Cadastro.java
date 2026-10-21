@@ -1,5 +1,5 @@
 
-package VIEW;
+package VIEW.Pessoa;
 
 
 import conexao.Conexao;
@@ -12,10 +12,10 @@ public class Cadastro extends javax.swing.JFrame {
     Pessoa pessoa = new Pessoa();
     PessoaDAO dao = new PessoaDAO();
     
-public void conectar(){
-    Conexao c = new Conexao();
-    c.getConexao();
-}
+    public void conectar(){
+        Conexao c = new Conexao();
+        c.getConexao();
+    }
 
 
     

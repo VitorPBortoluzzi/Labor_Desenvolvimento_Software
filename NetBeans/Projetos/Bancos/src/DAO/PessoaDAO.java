@@ -13,7 +13,7 @@ public class PessoaDAO {
     private Conexao conexao;
     private Connection conn;
     
-    public PessoaDAO(){
+public PessoaDAO(){
         this.conexao = new Conexao();
         this.conn = this.conexao.getConexao();
     }
@@ -81,7 +81,7 @@ public class PessoaDAO {
          stmt.setInt(1,id);
          stmt.execute();
      } catch(SQLException ex){
-         System.out.println("Erro ao atualizar pessoa: "+ex.getMessage());
+         System.out.println("Erro ao excluir pessoa: "+ex.getMessage());
      }
  }
  

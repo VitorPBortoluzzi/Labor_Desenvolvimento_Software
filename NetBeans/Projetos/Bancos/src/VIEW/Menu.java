@@ -4,6 +4,15 @@
  */
 package VIEW;
 
+import VIEW.Pessoa.Cadastro;
+import VIEW.Pessoa.arquivoPessoa;
+import VIEW.Pessoa.BuscarPessoa;
+import VIEW.Pessoa.BuscarPessoaSexo;
+import VIEW.Pessoa.UD;
+import VIEW.Veiculos.arquivoVeiculos;
+import VIEW.Veiculos.cadastroVeiculo;
+import VIEW.Veiculos.updateDeleteVeiculos;
+
 /**
  *
  * @author laboratorio
@@ -30,60 +39,101 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        Sair = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        CadastroPessoas = new javax.swing.JMenuItem();
+        EditarExcluirPessoas = new javax.swing.JMenuItem();
+        ArquivoPessoas = new javax.swing.JMenuItem();
+        BuscarPessoas = new javax.swing.JMenuItem();
+        BuscarPessoasSexo = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        Veiculos_Cadastro = new javax.swing.JMenuItem();
+        Veiculos_EditarExcluir = new javax.swing.JMenuItem();
+        Veiculos_Arquivo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu3.setText("Arquivo");
 
-        jMenuItem3.setText("Arquivo");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        Sair.setText("Sair");
+        Sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                SairActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem5.setText("Buscar");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem5);
-
-        jMenuItem4.setText("Sair");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem4);
+        jMenu3.add(Sair);
 
         jMenuBar1.add(jMenu3);
 
-        jMenu1.setText("Cadastro");
+        jMenu4.setText("Pessoas");
 
-        jMenuItem1.setText("Cadastro de Pessoas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        CadastroPessoas.setText("Cadastro de Pessoas");
+        CadastroPessoas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                CadastroPessoasActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu4.add(CadastroPessoas);
 
-        jMenuItem2.setText("Edicar e Excluir Pessoas");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        EditarExcluirPessoas.setText("Editar e Excluir Pessoas");
+        EditarExcluirPessoas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                EditarExcluirPessoasActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu4.add(EditarExcluirPessoas);
+
+        ArquivoPessoas.setText("Arquivo Pessoas");
+        ArquivoPessoas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ArquivoPessoasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(ArquivoPessoas);
+
+        BuscarPessoas.setText("Buscar Pessoas");
+        BuscarPessoas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarPessoasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(BuscarPessoas);
+
+        BuscarPessoasSexo.setText("Buscar Pessoas Sexo");
+        BuscarPessoasSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarPessoasSexoActionPerformed(evt);
+            }
+        });
+        jMenu4.add(BuscarPessoasSexo);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu1.setText("Veiculos");
+
+        Veiculos_Cadastro.setText("Cadastrar Veiculos");
+        Veiculos_Cadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Veiculos_CadastroActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Veiculos_Cadastro);
+
+        Veiculos_EditarExcluir.setText("Editar/Excluir Veiculos");
+        Veiculos_EditarExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Veiculos_EditarExcluirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Veiculos_EditarExcluir);
+
+        Veiculos_Arquivo.setText("Arquivo Veiculos");
+        Veiculos_Arquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Veiculos_ArquivoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Veiculos_Arquivo);
 
         jMenuBar1.add(jMenu1);
 
@@ -103,31 +153,51 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void CadastroPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroPessoasActionPerformed
         Cadastro cadPessoa = new Cadastro();
         cadPessoa.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_CadastroPessoasActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void EditarExcluirPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarExcluirPessoasActionPerformed
         UD editExc = new UD();
         editExc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_EditarExcluirPessoasActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Arquivo arq = new Arquivo();
+    private void ArquivoPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArquivoPessoasActionPerformed
+        arquivoPessoa arq = new arquivoPessoa();
         arq.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_ArquivoPessoasActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SairActionPerformed
         //this.dispose(); - fecha a tela;
         System.exit(0);
         
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_SairActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void BuscarPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarPessoasActionPerformed
         BuscarPessoa bp = new BuscarPessoa();
         bp.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_BuscarPessoasActionPerformed
+
+    private void Veiculos_ArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Veiculos_ArquivoActionPerformed
+        arquivoVeiculos arqv = new arquivoVeiculos();
+        arqv.setVisible(true);
+    }//GEN-LAST:event_Veiculos_ArquivoActionPerformed
+
+    private void Veiculos_CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Veiculos_CadastroActionPerformed
+        cadastroVeiculo cadV = new cadastroVeiculo();
+        cadV.setVisible(true);
+    }//GEN-LAST:event_Veiculos_CadastroActionPerformed
+
+    private void BuscarPessoasSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarPessoasSexoActionPerformed
+        BuscarPessoaSexo bpSexo = new BuscarPessoaSexo();
+        bpSexo.setVisible(true);
+    }//GEN-LAST:event_BuscarPessoasSexoActionPerformed
+
+    private void Veiculos_EditarExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Veiculos_EditarExcluirActionPerformed
+        updateDeleteVeiculos updV = new updateDeleteVeiculos();
+        updV.setVisible(true);
+    }//GEN-LAST:event_Veiculos_EditarExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,13 +225,18 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ArquivoPessoas;
+    private javax.swing.JMenuItem BuscarPessoas;
+    private javax.swing.JMenuItem BuscarPessoasSexo;
+    private javax.swing.JMenuItem CadastroPessoas;
+    private javax.swing.JMenuItem EditarExcluirPessoas;
+    private javax.swing.JMenuItem Sair;
+    private javax.swing.JMenuItem Veiculos_Arquivo;
+    private javax.swing.JMenuItem Veiculos_Cadastro;
+    private javax.swing.JMenuItem Veiculos_EditarExcluir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }

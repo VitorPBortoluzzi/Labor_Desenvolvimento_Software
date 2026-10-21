@@ -1,6 +1,8 @@
 
 package beans;
 
+import java.util.Objects;
+
 public class Pessoa {
     private int id;
     private String nome;
@@ -11,7 +13,6 @@ public class Pessoa {
         return id;
     }
 
-//  acho não precisar do método setId já que o banco de dados possui auto_increment na variável ID
     public void setId(int id) {
         this.id = id;
     }
@@ -42,8 +43,42 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" + "id=" + id + ", nome=" + nome + ", sexo=" + sexo + ", idioma=" + idioma + '}';
+        //return "Pessoa{" + "id=" + id + ", nome=" + nome + ", sexo=" + sexo + ", idioma=" + idioma + '}';
+        //return "ID: " + id + ", " + nome + ", " + sexo + ", " + idioma;
+        return this.id + " - "+this.nome;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pessoa other = (Pessoa) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.sexo, other.sexo)) {
+            return false;
+        }
+        return Objects.equals(this.idioma, other.idioma);
+    }
+    
+    
     
     
 }
