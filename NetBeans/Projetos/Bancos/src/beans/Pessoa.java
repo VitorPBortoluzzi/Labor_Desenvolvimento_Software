@@ -1,9 +1,9 @@
 
 package beans;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Pessoa {
+public class Pessoa implements Serializable{
     private int id;
     private String nome;
     private String sexo;
