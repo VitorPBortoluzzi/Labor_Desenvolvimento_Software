@@ -14,3 +14,5 @@ Adicionar Lista para armazenar valores e operações
 TODO: 
     * Calculadora -> Finalizar e Comparar com Professor
     * Sistema de Agenda??? "because? why not?"
+
+    * Atividade Aula 11/11 até 18/11
