@@ -30,7 +30,13 @@ CREATE TABLE veiculo(id int AUTO_INCREMENT PRIMARY KEY,
     );
 
 
-
+-- CREATE DATABASE IF NOT EXISTS bdaula01;
+-- CREATE TABLE IF NOT EXISTS pessoa (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     nome VARCHAR(50) NOT NULL,
+--     sexo VARCHAR(1) NOT NULL,
+--     idioma VARCHAR(10) NOT NULL
+-- );
 
 ```
 
